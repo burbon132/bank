@@ -157,8 +157,11 @@ int Deposit::DataBir::GetYear()
 
 ostream& operator<<(ostream& out, Deposit& deposit)
 {
-	double trash;
-	trash = deposit.GetMoney();
-	out << "—чет:" << endl << deposit.GetLastName() << endl << deposit.GetName() << endl << trash << endl << deposit.GetNumberCount() << endl << deposit.BD.GetDay() << "." << deposit.BD.GetMonth() << "." << deposit.BD.GetYear() << endl << endl;
+	out << "—чет:" << endl;
+	out << deposit.GetLastName() << endl;
+	out << deposit.GetName() << endl;
+	out << deposit.GetMoney() << endl; 
+	out << deposit.GetNumberCount() << endl;
+	out << deposit.BD.GetDay() << "." << deposit.BD.GetMonth() << "." << deposit.BD.GetYear() << endl << endl;
 	return out;
 }
