@@ -1,6 +1,7 @@
 #pragma once
 #ifndef _LIST_H_
 #define _LIST_H_
+#define _CRT_SECURE_NO_WARNINGS
 #include "deposit.h"
 class List
 {

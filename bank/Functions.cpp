@@ -1,65 +1,46 @@
 #include "Functions.h"
 
-void Compare(List& lst, char* TrainingDirection)
+void MoneyCheck(List& lst, double Money)
 {
 	for (int i = 0; i < lst.GetSize(); i++) {
-		if (strcmp(lst[i].GetTrainingDirection(), TrainingDirection) == 0) {
+		if (lst[i].GetMoney() > Money) {
 			cout << lst[i];
 		}
 	}
 }
 
-void Compare(List& lst, List& newlst, char* TrainingDirection, int GroupNumber)
+void SearchByHuman(List& lst, char* Name, char* LastName)
 {
 	for (int i = 0; i < lst.GetSize(); i++)
 	{
-		if ((strcmp(lst[i].GetTrainingDirection(), TrainingDirection) == 0) && (lst[i].GetNumberGroup() == GroupNumber)) {
-			newlst.push_front(lst[i]);
+		if ((strcmp(lst[i].GetName(), Name) == 0) && (strcmp(lst[i].GetLastName(), LastName) == 0))
+		{
+			cout << lst[i];
 		}
-	}
-	for (int i = 0; i < newlst.GetSize(); i++) {
-		cout << newlst[i];
 	}
 }
 
-void Eldest(List& lst, List& eldestlst)
+void DeleteByMoney(List& lst, double Money)
 {
-	Deposit eldest = lst[0];
-	int index;
-	for (int i = 1; i < lst.GetSize(); i++)
+	for (int i = 0; i < lst.GetSize(); i++)
 	{
-		if (lst[i].GGetYear() * 10000 + lst[i].GGetMonth() * 100 + lst[i].GGetDay() < eldest.GGetYear() * 10000 + eldest.GGetMonth() * 100 + eldest.GGetDay())
+		if (lst[i].GetMoney() < Money)
 		{
-			eldest = lst[i];
-			index = i;
+			lst.removeAt(i);
 		}
 	}
-	for (int i = 1; i < lst.GetSize(); i++)
-	{
-		if ((lst[i].GGetYear() * 10000 + lst[i].GGetMonth() * 100 + lst[i].GGetDay() == eldest.GGetYear() * 10000 + eldest.GGetMonth() * 100 + eldest.GGetDay()) && (index != i))
-			eldestlst.push_back(lst[i]);
-	}
-	eldestlst.push_back(eldest);
 }
 
-void Junior(List& lst, List& juniorlst)
+void CheckDate(List& lst, int Date)
 {
-	Deposit junior = lst[0];
-	int index;
-	for (int i = 1; i < lst.GetSize(); i++)
+	for (int i = 0; i < lst.GetSize(); i++)
 	{
-		if (lst[i].GGetYear() * 10000 + lst[i].GGetMonth() * 100 + lst[i].GGetDay() > junior.GGetYear() * 10000 + junior.GGetMonth() * 100 + junior.GGetDay())
+		if (Date < lst[i].GGetYear() * 10000 + lst[i].GGetMonth() * 100 + lst[i].GGetDay())
 		{
-			junior = lst[i];
-			index = i;
+			cout << lst[i];
 		}
 	}
-	for (int i = 1; i < lst.GetSize(); i++)
-	{
-		if ((lst[i].GGetYear() * 10000 + lst[i].GGetMonth() * 100 + lst[i].GGetDay() == junior.GGetYear() * 10000 + junior.GGetMonth() * 100 + junior.GGetDay()) && (index != i))
-			juniorlst.push_back(lst[i]);
-	}
-	juniorlst.push_back(junior);
+	cout << endl;
 }
 
 void SortList(List& lst)
@@ -112,12 +93,12 @@ void Save2Disk(List& lst)
 		}
 		fout << "\t";
 
-		fout.write(lst[i].GetTrainingDirection(), strlen(lst[i].GetTrainingDirection()));
-		if (strlen(lst[i].GetTrainingDirection()) < 8) {
+		fout << lst[i].GetMoney() << "\t";
+		if (lst[i].GetMoney() < 10 ^ 8) {
 			fout << "\t";
 		}
 		fout << "\t";
-		fout << lst[i].GetNumberGroup() << "\t";
+		fout << lst[i].GetNumberCount() << "\t";
 		fout << lst[i].GGetDay() << ".";
 		fout << lst[i].GGetMonth() << ".";
 		fout << lst[i].GGetYear() << endl;
@@ -136,23 +117,24 @@ void Read4Disk(List& lst)
 	int i = 0, j = 0;;
 	char* Name = new char;
 	char* LastName = new char;
-	char* TrainingDirection = new char;
-	char tresh;
-	int NumberGroup;
+	char trash;
+	double Money;
+	int NumberCount;
 	int day;
 	int month;
 	int year;
 	while (!fin.eof())
 	{
-		fin >> Name >> LastName >> TrainingDirection >> NumberGroup >> day >> tresh >> month >> tresh >> year;
+		fin >> Name >> LastName >> Money >> NumberCount >> day >> trash >> month >> trash >> year;
 		if (strcmp(Name, "") == 0)
 			break;
-		lst.push_front(Deposit(Name, LastName, TrainingDirection, NumberGroup, day, month, year, 0));
+		lst.push_front(Deposit(Name, LastName, Money, NumberCount, day, month, year, 0));
 	}
 	fin.close();
 	cout << endl;
 }
 
+/*
 void MainInterface()
 {
 	int MenuBtn;
@@ -194,6 +176,7 @@ void MainInterface()
 		}
 	}
 }
+*/
 
 void OptionalInterface(List& lst)
 {
@@ -202,17 +185,17 @@ void OptionalInterface(List& lst)
 	int MenuBtn;
 	while (sas)
 	{
-		cout << "Введите цифру нужного пункта меню:" << endl << endl;
-		cout << "1) Добавить нового студента(В начало списка)" << endl;
-		cout << "2) Удалить выбранного студента" << endl;
-		cout << "3) Отсортировать список по алфавиту(По фамилиям)" << endl;
-		cout << "4) Найти младшего или старшего студента" << endl;
-		cout << "5) Определить всех студентов заданной группы(Направление + Номер группы)" << endl;
-		cout << "6) Определить всех студентов заданного направления" << endl;
-		cout << "7) Сохранить файл на диск" << endl;
-		cout << "8) Просмотр списка" << endl;
+		cout << "Какую функию хотите выполнить? Введите её номер:" << endl << endl;
+		cout << "1) Добавить счёт" << endl;
+		cout << "2) Удалить счёт" << endl;
+		cout << "3) Сортировать список по алфавиту" << endl;
+		cout << "4) Найти все счета заданного клиента(по имени и фамилии)" << endl;
+		cout << "5) Определить все счета с суммой больше заданной" << endl;
+		cout << "6) Найти и удалить все счета с суммой меньше заданной" << endl;
+		cout << "7) Загрузить список" << endl;
+		cout << "8) Вывести список" << endl;
 		cout << "9) Очистить список" << endl;
-		cout << "10) Вернуться в главное меню" << endl << endl;
+		cout << "10) Выйти из программы" << endl << endl;
 
 		cin >> MenuBtn;
 		switch (MenuBtn)
@@ -223,9 +206,9 @@ void OptionalInterface(List& lst)
 			int counter;
 			char* Name = new char;
 			char* LastName = new char;
-			char* TrainingDirection = new char;
 			char trash;
-			int NumberGroup;
+			double Money;
+			int NumberCount;
 			int day;
 			int month;
 			int year;
@@ -239,10 +222,10 @@ void OptionalInterface(List& lst)
 
 				cout << "Фамилия: "; cin >> LastName;
 				cout << "Имя: "; cin >> Name;
-				cout << "Направление подготовки: "; cin >> TrainingDirection;
-				cout << "Номер группы: "; cin >> NumberGroup;
+				cout << "Направление подготовки: "; cin >> Money;
+				cout << "Номер группы: "; cin >> NumberCount;
 				cout << "День рождения в формате: дд.мм.гггг: "; cin >> day >> trash >> month >> trash >> year;
-				lst.push_front(Deposit(Name, LastName, TrainingDirection, NumberGroup, day, month, year, 0));
+				lst.push_front(Deposit(Name, LastName, Money, NumberCount, day, month, year, 0));
 				system("pause");
 				system("cls");
 			}
@@ -418,23 +401,12 @@ void OptionalInterface(List& lst)
 		}
 		case(7):
 		{
-			if (lst.GetSize() != 0)
-			{
-				system("cls");
-				Save2Disk(lst);
-				cout << "Выполнено!" << endl;
-				system("pause");
-				system("cls");
-				break;
-			}
-			else
-			{
-				system("cls");
-				cout << "Невозможно совершить данную операцию, так как лист пуст" << endl;
-				system("pause");
-				system("cls");
-				break;
-			}
+			system("cls");
+			Save2Disk(lst);
+			cout << "Выполнено!" << endl;
+			system("pause");
+			system("cls");
+			break;
 		}
 		case(8):
 		{

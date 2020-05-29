@@ -2,36 +2,34 @@
 
 Deposit::Deposit()
 {
-	this->Name = "Unknown";
-	this->LastName = "Unknown";
-	this->TrainingDirection = "Unknown";
-	this->NumberGroup = 0;
+	strcpy(this->Name, "Unknown");
+	strcpy(this->LastName, "Unknown");
+	this->Money = 0.0;
+	this->NumberCount = 0;
 	Deposit::DataBir::DataBir();
 }
 
-Deposit::Deposit(char* Name, char* LastName, char* TrainingDirection, int NumberGroup, int day, int month, int year)
+Deposit::Deposit(char* Name, char* LastName, double Money, int NumberCount, int day, int month, int year)
 {
 	this->Name = Name;
 	this->LastName = LastName;
-	this->TrainingDirection = TrainingDirection;
-	this->NumberGroup = NumberGroup;
+	this->Money = Money;
+	this->NumberCount = NumberCount;
 	BD.SetDay(day);
 	BD.SetMonth(month);
 	BD.SetYear(year);
 }
 
-Deposit::Deposit(char* Name, char* LastName, char* TrainingDirection, int NumberGroup, int day, int month, int year, int q)
+Deposit::Deposit(char* Name, char* LastName, double Money, int NumberCount, int day, int month, int year, int q)
 {
 	char* arrN = new char[strlen(Name) + 1];
 	for (int i = 0; i < strlen(Name) + 1; i++) { arrN[i] = Name[i]; }
 	char* arrLN = new char[strlen(LastName) + 1];
 	for (int i = 0; i < strlen(LastName) + 1; i++) { arrLN[i] = LastName[i]; }
-	char* arrTD = new char[strlen(TrainingDirection) + 1];
-	for (int i = 0; i < strlen(TrainingDirection) + 1; i++) { arrTD[i] = TrainingDirection[i]; }
 	this->Name = arrN;
 	this->LastName = arrLN;
-	this->TrainingDirection = arrTD;
-	this->NumberGroup = NumberGroup;
+	this->Money = Money;
+	this->NumberCount = NumberCount;
 	BD.SetDay(day);
 	BD.SetMonth(month);
 	BD.SetYear(year);
@@ -63,14 +61,14 @@ void Deposit::SetLastName(char* LastName)
 	this->LastName = LastName;
 }
 
-void Deposit::SetTrainingDirection(char* TrainingDirection)
+void Deposit::SetMoney(double Money)
 {
-	this->TrainingDirection = TrainingDirection;
+	this->Money = Money;
 }
 
-void Deposit::SetNumderGroup(int NumderGroup)
+void Deposit::SetNumberCount(int NumberCount)
 {
-	this->NumberGroup = NumberGroup;
+	this->NumberCount = NumberCount;
 }
 
 void Deposit::SSetDay(int day)
@@ -115,14 +113,14 @@ char* Deposit::GetLastName()
 	return this->LastName;
 }
 
-char* Deposit::GetTrainingDirection()
+double Deposit::GetMoney()
 {
-	return this->TrainingDirection;
+	return this->Money;
 }
 
-int Deposit::GetNumberGroup()
+int Deposit::GetNumberCount()
 {
-	return this->NumberGroup;
+	return this->NumberCount;
 }
 
 int Deposit::GGetDay()
@@ -159,6 +157,6 @@ int Deposit::DataBir::GetYear()
 
 ostream& operator<<(ostream& out, Deposit& student)
 {
-	out << "Студент:" << endl << student.GetLastName() << endl << student.GetName() << endl << student.GetTrainingDirection() << endl << student.GetNumberGroup() << endl << student.BD.GetDay() << "." << student.BD.GetMonth() << "." << student.BD.GetYear() << endl << endl;
+	out << "Студент:" << endl << student.GetLastName() << endl << student.GetName() << endl << student.GetMoney() << endl << student.GetNumberCount() << endl << student.BD.GetDay() << "." << student.BD.GetMonth() << "." << student.BD.GetYear() << endl << endl;
 	return out;
 }

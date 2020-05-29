@@ -1,28 +1,30 @@
 #pragma once
 #ifndef _DEPOSIT_H_
 #define _DEPOSIT_H_
+#define _CRT_SECURE_NO_WARNINGS
 #include <fstream>
 #include <iostream>
 #include <stdlib.h>
+using namespace std;
 struct Deposit
 {
 public:
 	Deposit();
-	Deposit(char* Name, char* LastName, char* TrainingDirection, int NumberGroup, int day, int month, int year);
-	Deposit(char* Name, char* LastName, char* TrainingDirection, int NumberGroup, int day, int month, int year, int q);
+	Deposit(char* Name, char* LastName, double Money, int NumberCount, int day, int month, int year);
+	Deposit(char* Name, char* LastName, double Money, int NumberCount, int day, int month, int year, int q);
 
 	void SetName(char* Name);
 	void SetLastName(char* LastName);
-	void SetTrainingDirection(char* TrainingDirection);
-	void SetNumderGroup(int NumderGroup);
+	void SetMoney(double Money);
+	void SetNumberCount(int NumberCount);
 	void SSetDay(int day);
 	void SSetMonth(int month);
 	void SSetYear(int year);
 
 	char* GetName();
 	char* GetLastName();
-	char* GetTrainingDirection();
-	int	  GetNumberGroup();
+	double GetMoney();
+	int	  GetNumberCount();
 	int	  GGetDay();
 	int	  GGetMonth();
 	int	  GGetYear();
@@ -32,8 +34,8 @@ public:
 protected:
 	char* Name = new char[15]; // Имя из 15 символов
 	char* LastName = new char[15]; // Фамилия из 15 символов
-	char* TrainingDirection = new char[5]; // Направление подготовки из 5 символов
-	int   NumberGroup; // номер группы
+	double Money; // Направление подготовки из 5 символов
+	int NumberCount; // номер счёта
 
 	class DataBir
 	{
