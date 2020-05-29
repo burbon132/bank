@@ -95,7 +95,7 @@ void Save2Disk(List& lst)
 			fout << "\t";
 		}
 		fout << "\t";
-
+		
 		fout << lst[i].GetMoney() << "\t";
 		fout << "\t";
 		fout << lst[i].GetNumberCount() << "\t";
@@ -265,7 +265,14 @@ void OptionalInterface()
 		{
 			if (lst.GetSize() != 0)
 			{
-				SortList(lst);
+				system("cls");
+				for (int i = 0; i < 10; i++)
+				{
+					SortList(lst);
+				}
+				cout << "Отсортированно" << endl;
+				system("pause");
+				system("cls");
 				break;
 			}
 			else
@@ -287,8 +294,8 @@ void OptionalInterface()
 				List newlst;
 				SetConsoleCP(1251);
 				SetConsoleOutputCP(1251);
-				cout << "Имя: "; cin >> SearchName;
 				cout << "Фамилия: "; cin >> SearchLastName;
+				cout << "Имя: "; cin >> SearchName;
 				SearchByHuman(lst, newlst, SearchName, SearchLastName);
 				SetConsoleCP(866);
 				SetConsoleOutputCP(866);
@@ -382,7 +389,6 @@ void OptionalInterface()
 		case(8):
 		{
 			system("cls");
-			List lst;
 			Read4Disk(lst);
 			system("cls");
 			break;

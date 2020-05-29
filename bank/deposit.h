@@ -34,7 +34,7 @@ public:
 protected:
 	char* Name = new char[15]; // Имя из 15 символов
 	char* LastName = new char[15]; // Фамилия из 15 символов
-	double Money; // Направление подготовки из 5 символов
+	double Money; // Деньги на счёте
 	int NumberCount; // номер счёта
 
 	class DataBir
