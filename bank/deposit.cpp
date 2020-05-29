@@ -155,8 +155,8 @@ int Deposit::DataBir::GetYear()
 
 /////////////////////////////////////////////////////////////OPERATORS/////////////////////////////////////////////////////////////////
 
-ostream& operator<<(ostream& out, Deposit& student)
+ostream& operator<<(ostream& out, Deposit& deposit)
 {
-	out << "Студент:" << endl << student.GetLastName() << endl << student.GetName() << endl << student.GetMoney() << endl << student.GetNumberCount() << endl << student.BD.GetDay() << "." << student.BD.GetMonth() << "." << student.BD.GetYear() << endl << endl;
+	out << "Счет:" << endl << deposit.GetLastName() << endl << deposit.GetName() << endl << deposit.GetMoney() << endl << deposit.GetNumberCount() << endl << deposit.BD.GetDay() << "." << deposit.BD.GetMonth() << "." << deposit.BD.GetYear() << endl << endl;
 	return out;
 }

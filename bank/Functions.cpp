@@ -1,5 +1,6 @@
 #include "Functions.h"
 
+
 void MoneyCheck(List& lst, double Money)
 {
 	for (int i = 0; i < lst.GetSize(); i++) {
@@ -9,7 +10,7 @@ void MoneyCheck(List& lst, double Money)
 	}
 }
 
-void SearchByHuman(List& lst, List& newlst char* Name, char* LastName)
+void SearchByHuman(List& lst, List& newlst, char* Name, char* LastName)
 {
 	for (int i = 0; i < lst.GetSize(); i++)
 	{
@@ -96,9 +97,6 @@ void Save2Disk(List& lst)
 		fout << "\t";
 
 		fout << lst[i].GetMoney() << "\t";
-		if (lst[i].GetMoney() < 10 ^ 8) {
-			fout << "\t";
-		}
 		fout << "\t";
 		fout << lst[i].GetNumberCount() << "\t";
 		fout << lst[i].GGetDay() << ".";
@@ -180,11 +178,12 @@ void MainInterface()
 }
 */
 
-void OptionalInterface(List& lst)
+void OptionalInterface()
 {
 	system("cls");
 	bool sas = true;
 	int MenuBtn;
+	List lst;
 	while (sas)
 	{
 		cout << "Какую функию хотите выполнить? Введите её номер:" << endl << endl;
@@ -290,7 +289,7 @@ void OptionalInterface(List& lst)
 				SetConsoleOutputCP(1251);
 				cout << "Имя: "; cin >> SearchName;
 				cout << "Фамилия: "; cin >> SearchLastName;
-				SearchByHuman(lst, SearchName, SearchLastName)
+				SearchByHuman(lst, newlst, SearchName, SearchLastName);
 				SetConsoleCP(866);
 				SetConsoleOutputCP(866);
 				Save2Disk(newlst);
@@ -432,6 +431,7 @@ void OptionalInterface(List& lst)
 		case(11):
 		{
 			system("cls");
+			Save2Disk(lst);
 			sas = false;
 			break;
 		}

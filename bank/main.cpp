@@ -1,5 +1,8 @@
-int main()
+#include "List.h"
+#include "deposit.h"
+#include "Functions.h"
+void main()
 {
-
-	return 0;
+	setlocale(LC_ALL, "RU");
+	OptionalInterface();
 }
