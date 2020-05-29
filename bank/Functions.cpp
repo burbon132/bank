@@ -9,14 +9,16 @@ void MoneyCheck(List& lst, double Money)
 	}
 }
 
-void SearchByHuman(List& lst, char* Name, char* LastName)
+void SearchByHuman(List& lst, List& newlst char* Name, char* LastName)
 {
 	for (int i = 0; i < lst.GetSize(); i++)
 	{
 		if ((strcmp(lst[i].GetName(), Name) == 0) && (strcmp(lst[i].GetLastName(), LastName) == 0))
 		{
+			newlst.push_front(lst[i]);
 			cout << lst[i];
 		}
+
 	}
 }
 
@@ -75,7 +77,7 @@ void SortList(List& lst)
 void Save2Disk(List& lst)
 {
 	string path;
-	cout << "Введите путь в конкретную папку и название для файла( %Name%.txt ) или только название для файла( %Name%.txt )(Файл будет сохранен в папке с программой)" << endl;
+	cout << "Введите название файла" << endl;
 	cin >> path;
 	ofstream fout;
 	fout.open(path);
@@ -109,7 +111,7 @@ void Save2Disk(List& lst)
 
 void Read4Disk(List& lst)
 {
-	cout << "Введите путь в конкретную папку и название файла( %Name%.txt ) или только название файла если он лежит в папке с программой)" << endl << endl;
+	cout << "Введите путь и название файла" << endl << endl;
 	string path;
 	cin >> path;
 	ifstream fin;
@@ -192,10 +194,11 @@ void OptionalInterface(List& lst)
 		cout << "4) Найти все счета заданного клиента(по имени и фамилии)" << endl;
 		cout << "5) Определить все счета с суммой больше заданной" << endl;
 		cout << "6) Найти и удалить все счета с суммой меньше заданной" << endl;
-		cout << "7) Загрузить список" << endl;
-		cout << "8) Вывести список" << endl;
-		cout << "9) Очистить список" << endl;
-		cout << "10) Выйти из программы" << endl << endl;
+		cout << "7) Найти все счета открытые позже заданной даты" << endl;
+		cout << "8) Загрузить список" << endl;
+		cout << "9) Вывести список" << endl;
+		cout << "10) Очистить список" << endl;
+		cout << "11) Выйти из программы" << endl << endl;
 
 		cin >> MenuBtn;
 		switch (MenuBtn)
@@ -212,9 +215,9 @@ void OptionalInterface(List& lst)
 			int day;
 			int month;
 			int year;
-			cout << "Сколько студентов хотите добавить?" << endl << endl; cin >> counter;
+			cout << "Какое количество счетов хотите добавить?" << endl << endl; cin >> counter;
 			system("cls");
-			cout << "Введите данные о студенте в формате:" << endl;
+			cout << "Введите данные о счете" << endl;
 			SetConsoleCP(1251);
 			SetConsoleOutputCP(1251);
 			for (int i = 0; i < counter; i++)
@@ -222,9 +225,9 @@ void OptionalInterface(List& lst)
 
 				cout << "Фамилия: "; cin >> LastName;
 				cout << "Имя: "; cin >> Name;
-				cout << "Направление подготовки: "; cin >> Money;
-				cout << "Номер группы: "; cin >> NumberCount;
-				cout << "День рождения в формате: дд.мм.гггг: "; cin >> day >> trash >> month >> trash >> year;
+				cout << "Сумма на счете: "; cin >> Money;
+				cout << "Номер счета: "; cin >> NumberCount;
+				cout << "Дата создание счета (дд.мм.гггг) "; cin >> day >> trash >> month >> trash >> year;
 				lst.push_front(Deposit(Name, LastName, Money, NumberCount, day, month, year, 0));
 				system("pause");
 				system("cls");
@@ -239,14 +242,13 @@ void OptionalInterface(List& lst)
 			{
 				system("cls");
 				for (int i = 0; i < lst.GetSize(); i++) {
-					cout << "Index: " << i << endl << lst[i];
+					cout << "Порядковый номер: " << i << endl << lst[i];
 
 				}
 				int index;
-				cout << "Введите номер студента, которого хотите удалить: "; cin >> index;
+				cout << "Укажите порядковый номер счета для его удаления "; cin >> index;
 				lst.removeAt(index);
-				system("cls");
-				cout << "Выполнено((" << endl;
+				cout << "Функция выполнена" << endl;
 				system("pause");
 				system("cls");
 				break;
@@ -254,7 +256,7 @@ void OptionalInterface(List& lst)
 			else
 			{
 				system("cls");
-				cout << "Невозможно совершить данную операцию, так как лист пуст" << endl;
+				cout << "Счета отсутствуют" << endl;
 				system("pause");
 				system("cls");
 				break;
@@ -264,17 +266,13 @@ void OptionalInterface(List& lst)
 		{
 			if (lst.GetSize() != 0)
 			{
-				system("cls");
 				SortList(lst);
-				cout << "Выполнено!" << endl;
-				system("pause");
-				system("cls");
 				break;
 			}
 			else
 			{
 				system("cls");
-				cout << "Невозможно совершить данную операцию, так как лист пуст" << endl;
+				cout << "Счета отсутствуют" << endl;
 				system("pause");
 				system("cls");
 				break;
@@ -285,56 +283,25 @@ void OptionalInterface(List& lst)
 			if (lst.GetSize() != 0)
 			{
 				system("cls");
-				int index;
-				bool ex = true;
-				List eldlst;
-				List junlst;
-				while (ex)
-				{
-					cout << "1) Найти младшего студента\n2) Найти старшего студента" << endl << endl;
-					cin >> index;
-					system("cls");
-					switch (index)
-					{
-					case(1):
-					{
-						Junior(lst, junlst);
-						cout << "Самый(ые) молодой(ые) студент(ы):" << endl << endl;
-						for (int i = 0; i < junlst.GetSize(); i++)
-						{
-							cout << junlst[i];
-						}
-						ex = false;
-						system("pause");
-						system("cls");
-						break;
-					}
-					case(2):
-					{
-						Eldest(lst, eldlst);
-						cout << "Самый(ые) старший(ые) студент(ы)" << endl << endl;
-						for (int i = 0; i < eldlst.GetSize(); i++)
-						{
-							cout << eldlst[i];
-						}
-						ex = false;
-						system("pause");
-						system("cls");
-						break;
-					}
-					default:
-						cout << "ERROR404: Цифра не найдена xDD" << endl;
-						system("pause");
-						system("cls");
-						break;
-					}
-				}
+				char* SearchName = new char;
+				char* SearchLastName = new char;
+				List newlst;
+				SetConsoleCP(1251);
+				SetConsoleOutputCP(1251);
+				cout << "Имя: "; cin >> SearchName;
+				cout << "Фамилия: "; cin >> SearchLastName;
+				SearchByHuman(lst, SearchName, SearchLastName)
+				SetConsoleCP(866);
+				SetConsoleOutputCP(866);
+				Save2Disk(newlst);
+				system("pause");
+				system("cls");
 				break;
 			}
 			else
 			{
 				system("cls");
-				cout << "Невозможно совершить данную операцию, так как лист пуст" << endl;
+				cout << "Счета отсутствуют" << endl;
 				system("pause");
 				system("cls");
 				break;
@@ -345,22 +312,10 @@ void OptionalInterface(List& lst)
 			if (lst.GetSize() != 0)
 			{
 				system("cls");
-				char* TD = new char;
-				int NG;
-				int index;
-				List newlst;
-				SetConsoleCP(1251);
-				SetConsoleOutputCP(1251);
-				cout << "Введите направление и номер группы в формате: РТ 12" << endl; cin >> TD >> NG; cout << endl;
-				Compare(lst, newlst, TD, NG);
-				SetConsoleCP(866);
-				SetConsoleOutputCP(866);
-				cout << "Если хотите сохранить список введите 1, для продолжение без сохранения введите любое другое число" << endl;
-				cin >> index; cout << endl;
-				if (index == 1) {
-					Save2Disk(newlst);
-					cout << "Файл сохранен!" << endl;
-				}
+				double NeedfulMoney;
+				cout << "Введите сумму" << endl;
+				cin >> NeedfulMoney;
+				MoneyCheck(lst, NeedfulMoney);
 				system("pause");
 				system("cls");
 				break;
@@ -368,7 +323,7 @@ void OptionalInterface(List& lst)
 			else
 			{
 				system("cls");
-				cout << "Невозможно совершить данную операцию, так как лист пуст" << endl;
+				cout << "Счета отсутствуют" << endl;
 				system("pause");
 				system("cls");
 				break;
@@ -378,14 +333,12 @@ void OptionalInterface(List& lst)
 		{
 			if (lst.GetSize() != 0)
 			{
-				SetConsoleCP(1251);
-				SetConsoleOutputCP(1251);
+
 				system("cls");
-				char* TD = new char;
-				cout << "Введите направление в формате: РТ" << endl; cin >> TD;	cout << endl;
-				Compare(lst, TD);
-				SetConsoleCP(866);
-				SetConsoleOutputCP(866);
+				double NeedfulMoney;
+				cout << "Введите сумму" << endl;
+				cin >> NeedfulMoney;
+				DeleteByMoney(lst, NeedfulMoney);
 				system("pause");
 				system("cls");
 				break;
@@ -393,7 +346,7 @@ void OptionalInterface(List& lst)
 			else
 			{
 				system("cls");
-				cout << "Невозможно совершить данную операцию, так как лист пуст" << endl;
+				cout << "Счета отсутствуют" << endl;
 				system("pause");
 				system("cls");
 				break;
@@ -401,14 +354,41 @@ void OptionalInterface(List& lst)
 		}
 		case(7):
 		{
+			if (lst.GetSize() != 0)
+			{
+
+				system("cls");
+				int Day;
+				int Month;
+				int Year;
+				int Number;
+				char trash;
+				cout << "Введите дату открытия счета(дд.мм.гггг)" << endl;
+				cin >> Day >> trash >> Month >> trash >> Year;
+				Number = Year * 10000 + Month * 100 + Day;
+				CheckDate(lst, Number);
+				system("pause");
+				system("cls");
+				break;
+			}
+			else
+			{
+				system("cls");
+				cout << "Счета отсутствуют" << endl;
+				system("pause");
+				system("cls");
+				break;
+			}
+		}
+		case(8):
+		{
 			system("cls");
-			Save2Disk(lst);
-			cout << "Выполнено!" << endl;
-			system("pause");
+			List lst;
+			Read4Disk(lst);
 			system("cls");
 			break;
 		}
-		case(8):
+		case(9):
 		{
 			if (lst.GetSize() != 0)
 			{
@@ -423,27 +403,7 @@ void OptionalInterface(List& lst)
 			else
 			{
 				system("cls");
-				cout << "Невозможно совершить данную операцию, так как лист пуст" << endl;
-				system("pause");
-				system("cls");
-				break;
-			}
-		}
-		case(9):
-		{
-			if (lst.GetSize() != 0)
-			{
-				system("cls");
-				lst.clear();
-				cout << "Выполнено((\n" << endl;
-				system("pause");
-				system("cls");
-				break;
-			}
-			else
-			{
-				system("cls");
-				cout << "Невозможно совершить данную операцию, так как лист пуст" << endl;
+				cout << "Счета отсутствуют" << endl;
 				system("pause");
 				system("cls");
 				break;
@@ -451,13 +411,33 @@ void OptionalInterface(List& lst)
 		}
 		case(10):
 		{
+			if (lst.GetSize() != 0)
+			{
+				system("cls");
+				lst.clear();
+				cout << "Удалено\n" << endl;
+				system("pause");
+				system("cls");
+				break;
+			}
+			else
+			{
+				system("cls");
+				cout << "Счета отсутствуют" << endl;
+				system("pause");
+				system("cls");
+				break;
+			}
+		}
+		case(11):
+		{
 			system("cls");
 			sas = false;
 			break;
 		}
 		default:
 			system("cls");
-			cout << "ERROR404: Цифра не найдена xDD" << endl;
+			cout << "Функция не найдена" << endl;
 			system("pause");
 			system("cls");
 			break;
